@@ -29,6 +29,7 @@ public class NeighborhoodLibrary {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String in = "";
+        printBooks(true);
 
         do {
             printHomeScreen();
@@ -40,5 +41,14 @@ public class NeighborhoodLibrary {
         System.out.println("1 - Show available books \n" +
                 "2 - Show checked out books \n" +
                 "3 - Exit program");
+    }
+    public static void printBooks(boolean available) {
+        System.out.printf("%-3s %-15s %s" + (available ? " → %s" : "") + "%n", "Id", "ISBN", "Title", "Checked Out By");
+
+        for(Book book : library) {
+            if(book.isCheckedOut() == available) {
+                book.display();
+            }
+        }
     }
 }

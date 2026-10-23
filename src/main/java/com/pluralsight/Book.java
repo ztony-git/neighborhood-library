@@ -76,4 +76,8 @@ public class Book {
         checkedOutTo = "";
         isCheckedOut = false;
     }
+
+    public void display() {
+        System.out.printf("%-3d %-15s %s" + (isCheckedOut ? " → %s" : "") + "%n", id, isbn, title, checkedOutTo);
+    }
 }
