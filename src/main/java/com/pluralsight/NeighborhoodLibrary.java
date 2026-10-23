@@ -1,5 +1,7 @@
 package com.pluralsight;
 
+import java.util.Scanner;
+
 public class NeighborhoodLibrary {
     static Book[] library = {
             new Book(1, "978-1836646334", "Python Illustrated: Not another boring Python book, learn programming the fun way"),
@@ -22,11 +24,21 @@ public class NeighborhoodLibrary {
             new Book(18, "978-0142000670", "Of Mice and Men"),
             new Book(19, "978-0143128571", "Romeo and Juliet"),
             new Book(20, "978-0143039952", "The Odyssey")
-
     };
 
-
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String in = "";
 
+        do {
+            printHomeScreen();
+            in =  scanner.nextLine().trim();
+        } while (!in.equalsIgnoreCase("3"));
+    }
+
+    public static void printHomeScreen() {
+        System.out.println("1 - Show available books \n" +
+                "2 - Show checked out books \n" +
+                "3 - Exit program");
     }
 }
