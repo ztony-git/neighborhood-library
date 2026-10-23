@@ -58,4 +58,14 @@ public class Book {
     public void  checkOut() {
         isCheckedOut = true;
     }
+
+    public void checkOut(String name) {
+        checkedOutTo = name;
+        isCheckedOut = true;
+    }
+
+    public void checkIn() {
+        checkedOutTo = "";
+        isCheckedOut = false;
+    }
 }
