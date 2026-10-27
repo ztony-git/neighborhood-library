@@ -28,21 +28,39 @@ public class NeighborhoodLibrary {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String in = "";
-        printBooks(true);
+        String in;
 
         do {
             printHomeScreen();
             in =  scanner.nextLine().trim();
+
+            switch  (in) {
+                case "1" -> {
+                    printBooks(false);
+                    checkOutBook(scanner, true);
+                }
+
+                case "2" -> {
+                    printBooks(true);
+                    checkOutBook(scanner, false);
+                }
+            }
         } while (!in.equalsIgnoreCase("3"));
     }
 
+    public static void printDivider() {
+        System.out.println("-----------------------------------------------------------------");
+    }
+
     public static void printHomeScreen() {
+        printDivider();
         System.out.println("1 - Show available books \n" +
                 "2 - Show checked out books \n" +
                 "3 - Exit program");
     }
+
     public static void printBooks(boolean available) {
+        printDivider();
         System.out.printf("%-3s %-15s %s" + (available ? " → %s" : "") + "%n", "Id", "ISBN", "Title", "Checked Out By");
 
         for(Book book : library) {
@@ -51,4 +69,61 @@ public class NeighborhoodLibrary {
             }
         }
     }
+
+    public static void checkOutBook(Scanner scanner, boolean isCheckingOut) {
+//        Enter an Id to check out, or 0 to go back: 2
+//        Enter your name: Maya
+//        Dune is checked out to Maya.
+        String in;
+        do {
+            printDivider();
+            System.out.printf("C - Check %s Book%nX - Return to Home Menu%n", isCheckingOut ? "Out" : "In");
+            in = scanner.nextLine().trim();
+
+            switch (in.toLowerCase()) {
+                case "c" -> {
+                    String idChosen = "-1";
+                    do {
+                        try {
+                            System.out.print("Enter an Id to check out, or 0 to go back: ");
+                            idChosen = scanner.nextLine().trim();
+
+                            if (idChosen.equalsIgnoreCase("0")) {
+                                break;
+                            }
+
+                            int idInt = Integer.parseInt(idChosen);
+                            int found = -1;
+
+                            for (int i = 0; i < library.length; i++) {
+                                if (library[i].getId() == idInt && library[i].isCheckedOut() != isCheckingOut) {
+                                    found = i;
+                                }
+                            }
+                            if (found == -1)
+                                System.out.println("Book Id not found!");
+                            else {
+                                if (isCheckingOut) {
+                                    System.out.print("Enter your name: ");
+                                    library[found].setCheckedOutTo(scanner.nextLine().trim());
+                                }
+                                library[found].setCheckedOut(isCheckingOut);
+                                System.out.printf("%s is checked %s %s%n", library[found].getTitle(), isCheckingOut ? "out to" : "in by", library[found].getCheckedOutTo());
+//                            System.out.println(library[found].getTitle() + " is checked out to " + library[found].getCheckedOutTo());
+
+                                if (!isCheckingOut) {
+                                    library[found].setCheckedOutTo("");
+                                }
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Please enter a valid Id!");
+                        }
+                    } while(!in.equalsIgnoreCase("0"));
+                }
+            }
+        } while(!in.equalsIgnoreCase("X"));
+    }
+
+
+
 }
