@@ -46,6 +46,8 @@ public class NeighborhoodLibrary {
                 }
             }
         } while (!in.equalsIgnoreCase("3"));
+
+        scanner.close();
     }
 
     public static void printDivider() {
